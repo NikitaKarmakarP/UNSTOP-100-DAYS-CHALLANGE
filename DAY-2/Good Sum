@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+int finalSumAfterOperations(vector<int>& arr) {
+    stack<int> st;  // Stack to store positive numbers
+    int sum = 0;    // Final sum after operations
+
+    for (int num : arr) {
+        if (num >= 0) {
+            st.push(num);  // Push positive numbers to the stack
+            sum += num;     // Add to the total sum
+        } else {
+            int required = -num; // Convert negative number to positive (absolute value)
+            int removedSum = 0;
+
+            // Remove elements from stack until required sum is achieved or stack is empty
+            while (!st.empty() && removedSum < required) {
+                removedSum += st.top();
+                sum -= st.top(); // Reduce from total sum
+                st.pop();
+            }
+
+            // Convert the negative number to its absolute value and add to the sum
+            sum += required;
+            st.push(required);
+        }
+    }
+    
+    return sum;
+}
+
+int main() {
+    int n;
+    cin >> n; // Read number of elements
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i]; // Read array elements
+    }
+
+    cout << finalSumAfterOperations(arr) << endl; // Print the final sum
+
+    return 0;
+}
