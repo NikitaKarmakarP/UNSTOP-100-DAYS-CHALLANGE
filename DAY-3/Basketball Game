@@ -1,0 +1,53 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+
+int calculateScore(vector<string>& ops) {
+    stack<int> record;
+    int sum = 0;
+
+    for (string op : ops) {
+        if (op == "C") {
+            if (!record.empty()) {
+                sum -= record.top(); // Remove last score from sum
+                record.pop();        // Remove last score
+            }
+        } else if (op == "D") {
+            if (!record.empty()) {
+                int doublePrev = 2 * record.top();
+                record.push(doublePrev);
+                sum += doublePrev;
+            }
+        } else if (op == "+") {
+            if (record.size() >= 2) {
+                int top1 = record.top(); record.pop();
+                int top2 = record.top();
+                record.push(top1);  // Restore top1
+                int newScore = top1 + top2;
+                record.push(newScore);
+                sum += newScore;
+            }
+        } else {
+            int newScore = stoi(op); // Convert string to integer
+            record.push(newScore);
+            sum += newScore;
+        }
+    }
+
+    return sum;
+}
+
+int main() {
+    int n;
+    cin >> n;  // Read number of operations
+    vector<string> ops(n);
+    
+    for (int i = 0; i < n; i++) {
+        cin >> ops[i];  // Read operations
+    }
+
+    cout << calculateScore(ops) << endl;  // Print final sum
+
+    return 0;
+}
