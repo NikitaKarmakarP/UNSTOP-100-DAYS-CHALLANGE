@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int countDifferingBits(const string& a, const string& b) {
+    int aLen = a.length(), bLen = b.length();
+    int totalDiff = 0;
+
+    // Iterate over every substring of b with length same as a
+    for (int i = 0; i <= bLen - aLen; i++) {
+        int diffCount = 0;
+        for (int j = 0; j < aLen; j++) {
+            if (a[j] != b[i + j]) diffCount++;
+        }
+        totalDiff += diffCount;
+    }
+
+    return totalDiff;
+}
+
+int main() {
+    string a, b;
+    cin >> a >> b;
+
+    cout << countDifferingBits(a, b) << endl;
+    return 0;
+}
