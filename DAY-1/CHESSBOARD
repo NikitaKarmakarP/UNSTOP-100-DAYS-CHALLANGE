@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+string getCellColor(string s) {
+    char column = s[0];
+    int row = s[1] - '0';
+
+    // Convert column to 1-based index ('a' -> 1, 'b' -> 2, ..., 'h' -> 8)
+    int colIndex = column - 'a' + 1;
+
+    // If sum of row and column index is even, it's a black square, else white
+    return (colIndex + row) % 2 == 0 ? "Black" : "White";
+}
+
+int main() {
+    string s;
+    cin >> s;
+    cout << getCellColor(s) << endl;
+    return 0;
+}
