@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAXN 100005
+
+void solve() {
+    int N;
+    char s[MAXN];
+    
+    scanf("%d", &N);  // Read the length of the sequence
+    scanf("%s", s);   // Read the sequence of colors
+
+    int valid = 1;  // Assume valid initially
+    int hasPair = 0;
+    int i = 0;
+
+    while (i < N) {
+        while (i < N && s[i] == 'W') i++;  // Skip white spaces
+        if (i >= N) break;  // If the entire string is "W", exit
+
+        int segmentHasB = 0, segmentHasR = 0;
+        while (i < N && s[i] != 'W') {
+            if (s[i] == 'B') segmentHasB = 1;
+            if (s[i] == 'R') segmentHasR = 1;
+            i++;
+        }
+
+        if (!segmentHasB || !segmentHasR) {
+            valid = 0;  // A segment must have both 'B' and 'R'
+            break;
+        }
+        hasPair = 1;
+    }
+
+    if (!hasPair) valid = 0;  // If we never found a valid pair, return NO
+    printf("%s\n", valid ? "YES" : "NO");
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);  // Read number of test cases
+
+    while (T--) {
+        solve();  // Process each test case
+    }
+
+    return 0;
+}
