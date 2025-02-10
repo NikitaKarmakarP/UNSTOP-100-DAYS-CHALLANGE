@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int highestAltitude(vector<int>& gain) {
+    int maxAltitude = 0, currentAltitude = 0;
+
+    for (int g : gain) {
+        currentAltitude += g;
+        maxAltitude = max(maxAltitude, currentAltitude);
+    }
+
+    return maxAltitude;
+}
+
+int main() {
+    int n;
+    cin >> n;  // Read the number of elements
+    vector<int> gain(n);
+
+    for (int i = 0; i < n; i++) {
+        cin >> gain[i];  // Read gain values
+    }
+
+    cout << highestAltitude(gain) << endl;  // Print the highest altitude
+
+    return 0;
+}
