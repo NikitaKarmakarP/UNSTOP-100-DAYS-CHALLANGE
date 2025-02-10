@@ -1,0 +1,40 @@
+#include <iostream>
+#include <set>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int countDivisibleNumbers(int K, vector<int>& arr) {
+    set<int> uniqueNumbers;
+    int N = arr.size();
+
+    // Generate all possible numbers of different lengths (1 to N)
+    sort(arr.begin(), arr.end()); // Sorting to ensure proper permutations
+    do {
+        for (int length = 1; length <= N; length++) {
+            int num = 0;
+            for (int i = 0; i < length; i++) {
+                num = num * 10 + arr[i]; // Construct number
+            }
+            if (num % K == 0) {
+                uniqueNumbers.insert(num);
+            }
+        }
+    } while (next_permutation(arr.begin(), arr.end())); // Get all permutations
+
+    return uniqueNumbers.size();
+}
+
+int main() {
+    int K, N;
+    cin >> K >> N;
+    vector<int> arr(N);
+
+    for (int i = 0; i < N; i++) {
+        cin >> arr[i];
+    }
+
+    cout << countDivisibleNumbers(K, arr) << endl;
+    return 0;
+}
