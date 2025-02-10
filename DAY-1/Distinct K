@@ -3,37 +3,39 @@
 #include <vector>
 using namespace std;
 
-int main() {
-    int N;
-    cin >> N;
-    
+string findKthUnique(int n, vector<string> &arr, int k) {
     map<string, int> freq; // To store frequency of each string
-    vector<string> order;  // To store order of first appearances
-    
-    for (int i = 0; i < N; i++) {
-        string s;
-        cin >> s;
-        
-        if (freq[s] == 0) {
-            order.push_back(s); // Store first occurrence
+
+    // Count occurrences of each string
+    for (auto &s : arr) {
+        freq[s]++;
+    }
+
+    int count = 0;
+
+    // Iterate again in original order
+    for (auto &s : arr) {
+        if (freq[s] == 1) { // If it's a unique string
+            count++;
+            if (count == k) return s; // Return k-th unique string
         }
-        freq[s]++; // Increment frequency
+    }
+
+    return "-1"; // If not enough unique strings
+}
+
+int main() {
+    int n;
+    cin >> n;
+    vector<string> arr(n);
+    
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
     }
 
     int k;
     cin >> k;
 
-    int uniqueCount = 0;
-    for (const string &s : order) {
-        if (freq[s] == 1) { // If it's unique
-            uniqueCount++;
-            if (uniqueCount == k) {
-                cout << s << endl;
-                return 0;
-            }
-        }
-    }
-
-    cout << "-1" << endl; // If less than k unique strings exist
+    cout << findKthUnique(n, arr, k) << endl;
     return 0;
 }
