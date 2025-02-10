@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int MAX_N = 40000;
+vector<int> tree[MAX_N + 1];  // Adjacency list for the tree
+int maxDiameter = 0;          // Stores the longest path found
+
+// DFS function to find the height of the tree
+int dfs(int node, int parent) {
+    int maxDepth1 = 0, maxDepth2 = 0;
+
+    for (int child : tree[node]) {
+        if (child == parent) continue;  // Avoid going back to parent
+
+        int childDepth = dfs(child, node);
+
+        // Update the two highest depths encountered
+        if (childDepth > maxDepth1) {
+            maxDepth2 = maxDepth1;
+            maxDepth1 = childDepth;
+        } else if (childDepth > maxDepth2) {
+            maxDepth2 = childDepth;
+        }
+    }
+
+    // Update the maximum diameter found
+    maxDiameter = max(maxDiameter, maxDepth1 + maxDepth2);
+
+    return maxDepth1 + 1;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    for (int i = 1; i <= n; i++) {
+        int left, right;
+        cin >> left >> right;
+        
+        if (left != -1) {
+            tree[i].push_back(left);
+            tree[left].push_back(i);
+        }
+        if (right != -1) {
+            tree[i].push_back(right);
+            tree[right].push_back(i);
+        }
+    }
+
+    dfs(1, -1);  // Start DFS from root node (1)
+
+    cout << maxDiameter << endl;
+    return 0;
+}
