@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+#include <algorithm>  // For reverse()
+using namespace std;
+
+string reverseFromLastOccurrence(string s, char ch) {
+    int lastIndex = s.rfind(ch);  // Find the last occurrence of 'ch'
+    
+    if (lastIndex == string::npos) return s;  // If 'ch' is not found, return original string
+
+    reverse(s.begin() + lastIndex, s.end());  // Reverse from lastIndex to end
+    return s;
+}
+
+int main() {
+    string s;
+    char ch;
+    cin >> s >> ch;
+
+    cout << reverseFromLastOccurrence(s, ch) << endl;
+    return 0;
+}
