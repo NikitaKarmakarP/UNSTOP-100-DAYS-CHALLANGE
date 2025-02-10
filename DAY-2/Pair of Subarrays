@@ -1,0 +1,51 @@
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+typedef long long ll;
+
+int countEqualSumSubarrays(vector<int> &A, int N) {
+    unordered_map<int, vector<int>> sumPositions; // Stores sum and their end indices
+    vector<ll> prefixSum(N + 1, 0); // Prefix sum array
+    int count = 0; // To store the number of valid pairs
+
+    // Compute prefix sums
+    for (int i = 1; i <= N; i++) {
+        prefixSum[i] = prefixSum[i - 1] + A[i - 1];
+    }
+
+    // Find all subarrays using prefix sum
+    for (int L = 1; L <= N; L++) {
+        for (int R = L; R <= N; R++) {
+            ll subarraySum = prefixSum[R] - prefixSum[L - 1]; // Sum of A[L-1...R-1]
+
+            // Check if this sum has appeared before in a non-overlapping way
+            if (sumPositions.find(subarraySum) != sumPositions.end()) {
+                for (int prevEnd : sumPositions[subarraySum]) {
+                    if (prevEnd < L) { // Ensure no overlap
+                        count++;
+                    }
+                }
+            }
+
+            // Store the sum and its ending index
+            sumPositions[subarraySum].push_back(R);
+        }
+    }
+
+    return count;
+}
+
+int main() {
+    int N;
+    cin >> N;
+    vector<int> A(N);
+
+    for (int i = 0; i < N; i++) {
+        cin >> A[i];
+    }
+
+    cout << countEqualSumSubarrays(A, N) << endl;
+    return 0;
+}
