@@ -1,0 +1,36 @@
+#include <iostream>
+#include <unordered_set>
+#include <vector>
+using namespace std;
+
+int countConsistentCars(string components, int n, vector<string>& models) {
+    unordered_set<char> allowed(components.begin(), components.end());
+    int count = 0;
+
+    for (const string& model : models) {
+        bool isConsistent = true;
+        for (char c : model) {
+            if (allowed.find(c) == allowed.end()) {
+                isConsistent = false;
+                break;
+            }
+        }
+        if (isConsistent) count++;
+    }
+
+    return count;
+}
+
+int main() {
+    string components;
+    int n;
+    cin >> components >> n;
+    
+    vector<string> models(n);
+    for (int i = 0; i < n; i++) {
+        cin >> models[i];
+    }
+
+    cout << countConsistentCars(components, n, models) << endl;
+    return 0;
+}
