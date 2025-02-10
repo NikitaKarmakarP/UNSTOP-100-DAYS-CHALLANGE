@@ -1,0 +1,32 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Function to compute nth row of Pascal's Triangle
+vector<int> getPascalRow(int n) {
+    vector<int> row(n + 1, 1);  // Initialize row with 1s
+    long long value = 1;  // To store C(n, k)
+    
+    // Compute values using Binomial Coefficient formula
+    for (int k = 1; k < n; k++) {
+        value = value * (n - k + 1) / k;
+        row[k] = value;
+    }
+
+    return row;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> result = getPascalRow(n);
+
+    // Print the nth row of Pascal's Triangle
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+    
+    return 0;
+}
