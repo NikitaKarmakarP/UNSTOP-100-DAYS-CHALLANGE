@@ -1,0 +1,54 @@
+#include <iostream>
+using namespace std;
+
+// Definition of a BST Node
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+    
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+// Function to insert nodes in BST
+TreeNode* insert(TreeNode* root, int key) {
+    if (root == NULL) return new TreeNode(key);
+    if (key < root->val) root->left = insert(root->left, key);
+    else root->right = insert(root->right, key);
+    return root;
+}
+
+// Function to compute the sum of nodes in the given range
+int rangeSumBST(TreeNode* root, int start, int end) {
+    if (!root) return 0;
+
+    // If root value is smaller than start, recurse on right subtree
+    if (root->val < start) return rangeSumBST(root->right, start, end);
+
+    // If root value is larger than end, recurse on left subtree
+    if (root->val > end) return rangeSumBST(root->left, start, end);
+
+    // If root value is in range, sum it and recurse on both sides
+    return root->val + rangeSumBST(root->left, start, end) + rangeSumBST(root->right, start, end);
+}
+
+int main() {
+    int n, val, start, end;
+    cin >> n;
+
+    TreeNode* root = NULL;
+
+    // Read BST values
+    for (int i = 0; i < n; i++) {
+        cin >> val;
+        root = insert(root, val);
+    }
+
+    // Read range
+    cin >> start >> end;
+
+    // Compute the sum in range
+    cout << rangeSumBST(root, start, end) << endl;
+
+    return 0;
+}
