@@ -1,0 +1,23 @@
+import heapq
+
+def max_sum_after_k_operations(n, k, arr):
+    # Convert array into a min-heap (so we can always access the smallest element)
+    heapq.heapify(arr)
+    
+    # Flip negatives first
+    while k > 0 and arr[0] < 0:
+        heapq.heapreplace(arr, -arr[0])  # Flip the smallest negative
+        k -= 1
+    
+    # If K is still odd, flip the smallest element once
+    if k % 2 == 1:
+        heapq.heapreplace(arr, -arr[0])
+    
+    return sum(arr)
+
+# Read input
+n, k = map(int, input().split())
+arr = list(map(int, input().split()))
+
+# Compute and print the result
+print(max_sum_after_k_operations(n, k, arr))
