@@ -1,0 +1,28 @@
+from collections import deque
+
+def can_reach_target(n, arr):
+    target = n - 1  # Required runs
+    queue = deque([0])  # Start at index 0 with 0 runs scored
+    visited = set()  # Keep track of visited positions
+
+    while queue:
+        curr_score = queue.popleft()
+
+        # If we reached exactly the target, return True
+        if curr_score == target:
+            return True
+
+        # Explore all possible scores from current position
+        for next_score in range(curr_score + 1, curr_score + arr[curr_score] + 1):
+            if next_score <= target and next_score not in visited:
+                visited.add(next_score)
+                queue.append(next_score)
+
+    return False  # If we exhaust all possibilities without reaching target
+
+# Read input
+n = int(input())
+arr = list(map(int, input().split()))
+
+# Print the result
+print(can_reach_target(n, arr))
