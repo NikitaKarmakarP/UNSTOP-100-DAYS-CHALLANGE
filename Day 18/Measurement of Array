@@ -1,0 +1,30 @@
+MOD = 10**9 + 7
+
+def calculate_measurement(arr):
+    n = len(arr)
+    
+    # Store original indices
+    indexed_arr = [(arr[i], i) for i in range(n)]
+    
+    # Sort by value, maintaining original indices
+    indexed_arr.sort()
+    
+    # Find last occurrence index in sorted order
+    last_occurrence = {}
+    for sorted_idx, (value, _) in enumerate(indexed_arr):
+        last_occurrence[value] = sorted_idx
+    
+    # Calculate sanity and measurement
+    measurement = 0
+    for value, original_idx in indexed_arr:
+        sanity = (original_idx + last_occurrence[value]) % MOD
+        measurement = (measurement + sanity) % MOD
+    
+    return measurement
+
+# Read input
+n = int(input())
+arr = list(map(int, input().split()))
+
+# Output result
+print(calculate_measurement(arr))
