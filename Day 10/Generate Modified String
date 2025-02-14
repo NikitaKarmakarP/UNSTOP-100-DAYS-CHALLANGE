@@ -1,0 +1,35 @@
+def is_prime(n):
+    """Check if a number is prime."""
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def convert_alphanumeric_string(n, s):
+    numeric_chars = [int(ch) for ch in s if ch.isdigit()]
+    prime_numbers = [num for num in numeric_chars if is_prime(num)]
+
+    if prime_numbers:
+        unique_number = sum(prime_numbers) // len(prime_numbers)
+    else:
+        unique_number = None  # Use digit itself if no primes
+
+    result = []
+    
+    for ch in s:
+        if ch.isdigit():
+            index = (int(ch) % unique_number) if unique_number else int(ch)
+            result.append(chr(ord('a') + index))
+        else:
+            result.append(ch)
+
+    print("".join(result))
+
+# Input Handling
+n = int(input().strip())
+s = input().strip()
+
+# Output the modified string
+convert_alphanumeric_string(n, s)
