@@ -1,0 +1,10 @@
+import math
+
+def count_heads(m):
+    return int(math.sqrt(m))
+
+# Read input
+m = int(input())
+
+# Compute and print result
+print(count_heads(m))
