@@ -1,0 +1,21 @@
+def count_good_indices(arr):
+    def is_power_of_two(x):
+        return x > 0 and (x & (x - 1)) == 0  # Check if x has only one bit set
+    
+    good_count = 0
+    prefix_sum = 0
+
+    for num in arr:
+        prefix_sum += num  # Calculate prefix sum
+        if is_power_of_two(prefix_sum):  
+            good_count += 1
+
+    return good_count
+
+
+# Input handling
+n = int(input().strip())
+arr = list(map(int, input().split()))
+
+# Output result
+print(count_good_indices(arr))
