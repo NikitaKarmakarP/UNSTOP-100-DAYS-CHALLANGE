@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isPrime(int x) {
+    if (x < 2) return false;
+    for (int i = 2; i * i <= x; i++) {
+        if (x % i == 0) return false;
+    }
+    return true;
+}
+
+int findMaxHuge(int N) {
+    int hugeness = 1, maxHuge = -1;
+
+    for (int i = 2; i <= N; i++) {
+        hugeness |= i; // Compute bitwise OR
+        
+        if (isPrime(hugeness)) {
+            maxHuge = hugeness;  // Update if it's prime
+        }
+    }
+
+    return maxHuge;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+    cout << findMaxHuge(N) << "\n";
+
+    return 0;
+}
