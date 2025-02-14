@@ -1,0 +1,15 @@
+def min_changes_to_sort(n, heights):
+    # Create a sorted version of the list
+    sorted_heights = sorted(heights)
+    
+    # Count how many elements are out of place
+    count = sum(1 for i in range(n) if heights[i] != sorted_heights[i])
+    
+    return count
+
+# Read input
+n = int(input())
+heights = list(map(int, input().split()))
+
+# Compute and print the result
+print(min_changes_to_sort(n, heights))
