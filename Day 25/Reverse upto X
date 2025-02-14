@@ -1,0 +1,70 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def append(self, data):
+        """Add a new node at the end of the linked list"""
+        if not self.head:
+            self.head = Node(data)
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = Node(data)
+
+    def reverse_upto_x(self, x):
+        """Reverse the linked list up to the first occurrence of x"""
+        if not self.head:
+            return
+
+        prev, current = None, self.head
+        start = self.head
+        found = False
+
+        # Reverse until we reach x or the end of the list
+        while current:
+            next_node = current.next
+            if current.data == x:
+                found = True
+                break
+            current.next = prev
+            prev = current
+            current = next_node
+
+        if found:
+            start.next = current.next  # Connect the last reversed node to remaining list
+            current.next = prev  # Reverse x as well
+            self.head = current  # Update head to x
+        else:
+            # If x is not found, reverse the entire linked list
+            self.head = prev
+
+    def print_list(self):
+        """Print the linked list"""
+        current = self.head
+        result = []
+        while current:
+            result.append(str(current.data))
+            current = current.next
+        print(" ".join(result))
+
+# Read input
+n = int(input().strip())  # Number of elements
+elements = list(map(int, input().strip().split()))  # Linked list elements
+x = int(input().strip())  # Element x
+
+# Create linked list
+ll = LinkedList()
+for e in elements:
+    ll.append(e)
+
+# Reverse up to x
+ll.reverse_upto_x(x)
+
+# Print result
+ll.print_list()
