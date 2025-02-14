@@ -1,0 +1,29 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int countPrefixAlignedFlips(vector<int>& flips) {
+    int maxFlipped = 0, count = 0;
+    
+    for (int i = 0; i < flips.size(); i++) {
+        maxFlipped = max(maxFlipped, flips[i]); // Track the rightmost flipped bit
+        if (maxFlipped == i + 1) count++; // If maxFlipped matches index+1, it's prefix-aligned
+    }
+    
+    return count;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+    
+    vector<int> flips(N);
+    for (int i = 0; i < N; i++) {
+        cin >> flips[i];
+    }
+
+    cout << countPrefixAlignedFlips(flips) << "\n";
+    return 0;
+}
