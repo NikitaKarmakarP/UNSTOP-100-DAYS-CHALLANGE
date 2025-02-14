@@ -1,0 +1,30 @@
+def longest_palindromic_substring(s):
+    # Transform the string to handle even-length cases
+    T = "#".join(f"^{s}$")  # Add special characters to avoid bounds checking
+    n = len(T)
+    P = [0] * n  # Array to store palindrome radius
+    C = R = 0    # Center and Right boundary of the rightmost palindrome
+
+    for i in range(1, n - 1):
+        mirr = 2 * C - i  # Mirror index
+
+        if i < R:
+            P[i] = min(R - i, P[mirr])
+
+        # Expand around the center i
+        while T[i + P[i] + 1] == T[i - P[i] - 1]:
+            P[i] += 1
+
+        # Update center and right boundary
+        if i + P[i] > R:
+            C, R = i, i + P[i]
+
+    # Find the longest palindromic substring length
+    return max(P)
+
+# Input Handling
+N = int(input().strip())
+S = input().strip()
+
+# Output the result
+print(longest_palindromic_substring(S))
