@@ -1,0 +1,27 @@
+from functools import lru_cache
+
+def min_xor_sum(a, b):
+    N = len(a)
+
+    @lru_cache(None)
+    def dp(index, mask):
+        if index == N:
+            return 0  # Base case: All elements are paired
+
+        min_xor = float('inf')
+
+        for j in range(N):
+            if not (mask & (1 << j)):  # Check if b[j] is not used
+                min_xor = min(min_xor, (a[index] ^ b[j]) + dp(index + 1, mask | (1 << j)))
+
+        return min_xor
+
+    return dp(0, 0)
+
+# Read input
+N = int(input().strip())
+a = list(map(int, input().strip().split()))
+b = list(map(int, input().strip().split()))
+
+# Compute and print the result
+print(min_xor_sum(a, b))
